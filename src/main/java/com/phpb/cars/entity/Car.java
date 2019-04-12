@@ -11,7 +11,7 @@ public class Car {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false, unique = true)
 	private int carID;
 
 	@Column

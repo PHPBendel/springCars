@@ -11,14 +11,14 @@ public class Owner {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false, unique = true)
 	private int ownerId;
 
 	@Column
 	private String ownerFirstName;
 	@Column
 	private String ownerLastName;
-	@Column
+    @Column(unique = true)
 	private String ownerEMail;
 
 	public Owner(String ownerFirstName, String ownerLastName, String ownerEMail) {

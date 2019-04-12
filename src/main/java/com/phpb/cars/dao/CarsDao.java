@@ -16,33 +16,53 @@ public class CarsDao {
 	@PersistenceContext
 	EntityManager em;
 
+	/**
+	 * Since this service is a REST API, every function will create a new
+	 * EntityManager and close it after we are done with the request
+	 **/
+
 	public CarsDao() {
 		emf = Persistence.createEntityManagerFactory("carros");
-		em = emf.createEntityManager();
 	}
 
 	public void insertCar(Car _car) {
+		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(_car);
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	public void deleteCar(Car car) {
+		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		Car c = em.merge(car);
 		em.remove(c);
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Car> getAllCars() {
+		em = emf.createEntityManager();
 		List<Car> result = em.createQuery("SELECT c FROM Car c").getResultList();
+		em.close();
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Car> getCar(int id) {
-		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE id = ?1").setParameter(1, id).getResultList();
+	public List<Car> getCar(Car _car) {
+		em = emf.createEntityManager();
+		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE id = ?1").setParameter(1, _car.getCarID()).getResultList();
+		em.close();
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Car> getCarByVin(Car _car) {
+		em = emf.createEntityManager();
+		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE carVin = ?1").setParameter(1, _car.getCarVin()).getResultList();
+		em.close();
 		return result;
 	}
 }
