@@ -7,8 +7,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Repository;
+
 import com.phpb.cars.entity.Car;
 
+@Repository
 public class CarsDao {
 
 	EntityManagerFactory emf;
@@ -53,15 +56,17 @@ public class CarsDao {
 	@SuppressWarnings("unchecked")
 	public List<Car> getCar(Car _car) {
 		em = emf.createEntityManager();
-		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE id = ?1").setParameter(1, _car.getCarID()).getResultList();
+		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE id = ?1").setParameter(1, _car.getCarID())
+				.getResultList();
 		em.close();
 		return result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Car> getCarByVin(Car _car) {
 		em = emf.createEntityManager();
-		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE carVin = ?1").setParameter(1, _car.getCarVin()).getResultList();
+		List<Car> result = em.createQuery("SELECT c FROM Car c WHERE carVin = ?1").setParameter(1, _car.getCarVin())
+				.getResultList();
 		em.close();
 		return result;
 	}

@@ -7,11 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
-import com.phpb.cars.entity.Owner;
+import org.springframework.stereotype.Repository;
+
 import com.phpb.cars.entity.Car;
+import com.phpb.cars.entity.Owner;
 
-import com.phpb.cars.dao.CarsDao;
-
+@Repository
 public class OwnersDao {
 
 	EntityManagerFactory emf;
@@ -53,9 +54,9 @@ public class OwnersDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Owner> getOwnerById(Owner _owner) {
+	public List<Owner> getOwnerById(int id) {
 		em = emf.createEntityManager();
-		List<Owner> result = em.createQuery("SELECT c FROM Owner c WHERE id = ?1").setParameter(1, _owner.getOwnerId())
+		List<Owner> result = em.createQuery("SELECT c FROM Owner c WHERE id = ?1").setParameter(1, id)
 				.getResultList();
 		em.close();
 		return result;
